@@ -1,0 +1,89 @@
+using System;
+using System.Linq;
+ 
+class Program
+{
+    public static void Main()
+    {
+        string[] words = Console.ReadLine().Split(" .".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        Console.WriteLine(String.Join(" ", words.Where(s => s.Length < 5 && s != words[words.Length - 1])));
+    }
+}
+
+
+
+
+using System;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp5
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string[] hexNumbers = { "A2", "3A", "C8", "1B", "B4" };
+
+            foreach (string hex in hexNumbers)
+            {
+                int dec = ToDec(hex);
+                listBox1.Items.Add(hex + " (13-ричная) = " + dec.ToString() + " (10-ричная)");
+            }
+        }
+
+        private int ToDec(string hex)
+        {
+            int dec = 0;
+            int power = 0;
+
+            for (int i = hex.Length - 1; i >= 0; i--)
+            {
+                int digit = HexDigitToInt(hex[i]);
+                dec += digit * (int)Math.Pow(13, power);
+                power++;
+            }
+
+            return dec;
+        }
+
+        private int HexDigitToInt(char hexDigit)
+        {
+            switch (hexDigit)
+            {
+                case '0':
+                    return 0;
+                case '1':
+                    return 1;
+                case '2':
+                    return 2;
+                case '3':
+                    return 3;
+                case '4':
+                    return 4;
+                case '5':
+                    return 5;
+                case '6':
+                    return 6;
+                case '7':
+                    return 7;
+                case '8':
+                    return 8;
+                case '9':
+                    return 9;
+                case 'A':
+                    return 10;
+                case 'B':
+                    return 11;
+                case 'C':
+                    return 12;
+                default:
+                    throw new ArgumentException("Недопустимая шестнадцатеричная цифра: " + hexDigit);
+            }
+        }
+    }
+}
